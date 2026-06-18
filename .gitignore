@@ -1,0 +1,30 @@
+# --- Maven ---
+target/
+*.jar
+*.war
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+
+# --- Eclipse (STS) ---
+.settings/
+.classpath
+.project
+.factorypath
+.springBeans
+.sts4-cache
+.apt_generated/
+
+# --- IDE General ---
+.idea/
+*.iml
+.vscode/
+
+# --- Sistema y Otros ---
+.DS_Store
+Thumbs.db
+logs/
+
+# --- Archivos Personales (¡IMPORTANTE!) ---
+application-local.properties
+.env
