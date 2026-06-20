@@ -66,9 +66,10 @@
 
 		<script>
 			$(function () {
-				$('#tbl-compra').DataTable({
+			
+				var table = $('#tbl-compra').DataTable({
 					language: {
-						search: 'Buscar Compra:',
+						search: 'Buscar Compra (ID):',
 						url: 'https://cdn.datatables.net/plug-ins/1.13.8/i18n/es-ES.json'
 					},
 					pageLength: 5, 
@@ -82,6 +83,19 @@
 						{targets: [5], orderable: false}, 
 						{targets: [5], searchable: false} 
 					]
+				});
+
+
+				$('.dataTables_filter input').unbind().bind('keyup', function() {
+					var value = this.value.trim();
+					
+					if (value) {
+						
+						table.column(0).search('^' + value + '$', true, false).draw();
+					} else {
+					
+						table.column(0).search('').draw();
+					}
 				});
 			});
 		</script>
