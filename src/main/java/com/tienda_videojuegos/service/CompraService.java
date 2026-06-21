@@ -21,6 +21,7 @@ public class CompraService {
 	public Compra getOne(Integer idCompra) {
 		return compraRepository.findById(idCompra).orElseThrow();
 	}
+	
 
 	public ResultadoResponse create(Compra compra) {
 		try {

@@ -28,6 +28,32 @@
 							</a>
 						</div>
 					</div>
+					<div class="row mb-3">
+										<fieldset class="border border-2 border-dark pb-2">
+											<legend class="float-none w-auto px-2">Filtros</legend>
+											<div th:if="${error}" class="alert alert-danger py-2 mb-2" role="alert">
+											            <i class="fa-solid fa-circle-exclamation"></i> <span th:text="${error}"></span>
+											        </div>
+											<form method="get" th:action="@{/compra/filtrar}" >
+												<div class="row align-items-end">
+													<div class="col-md-6">
+														<label for="idCompra" class="form-label">Filtrar por ID de Compra:</label>
+														                    <input type="number" id="idCompra" name="idCompra" class="form-control" 
+														                           placeholder="Ej. 15" th:value="${filtroActual}">
+													</div>
+													<div class="col-md-6 text-end">
+														<button type="submit" class="btn btn-outline-dark">
+															<i class="fa-solid fa-binoculars"></i> Buscar
+														</button>
+														<a th:href="@{/compra/filtrar}" class="btn btn-outline-secondary">
+															<i class="fa-solid fa-broom"></i> Limpiar
+														</a>
+													</div>
+												</div>
+											</form>
+										</fieldset>
+									</div>
+
 
 					<table id="tbl-compra" class="table table-hover table-responsive w-100">
 						<thead class="table-dark text-center">
@@ -65,39 +91,15 @@
 		<th:block th:utext="${toast}"></th:block>
 
 		<script>
-			$(function () {
-			
-				var table = $('#tbl-compra').DataTable({
-					language: {
-						search: 'Buscar Compra (ID):',
-						url: 'https://cdn.datatables.net/plug-ins/1.13.8/i18n/es-ES.json'
-					},
-					pageLength: 5, 
-					lengthMenu: [5, 10, 25, 50],
-					ordering: true,
-					order: [
-						[0, 'desc'] 
-					],
-					responsive: true,
-					columnDefs: [
-						{targets: [5], orderable: false}, 
-						{targets: [5], searchable: false} 
-					]
+				$(document).ready(function () {
+					$('#tbl-compra').DataTable({
+						language: {
+							search: "Buscar: ",
+							url: 'https://cdn.datatables.net/plug-ins/2.0.3/i18n/es-ES.json',
+						}
+					});
 				});
-
-
-				$('.dataTables_filter input').unbind().bind('keyup', function() {
-					var value = this.value.trim();
-					
-					if (value) {
-						
-						table.column(0).search('^' + value + '$', true, false).draw();
-					} else {
-					
-						table.column(0).search('').draw();
-					}
-				});
-			});
+			</script>
 		</script>
 	</body>
 

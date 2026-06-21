@@ -1,5 +1,9 @@
 package com.tienda_videojuegos.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.NoSuchElementException;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -7,6 +11,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes; 
 
 import com.tienda_videojuegos.model.Compra;
@@ -27,9 +32,31 @@ public class CompraController {
 	@GetMapping("listado")
 	public String listado(Model model) {
 		model.addAttribute("lstCompras", compraService.getAll());
-
 		return "TiendaJuegos/CompraList";
 	}
+	
+	@GetMapping("/filtrar")
+	public String filtrarCompras(@RequestParam(name = "idCompra", required = false) Integer idCompra, Model model) {
+	    List<Compra> listaResultado = new ArrayList<>();
+
+	    if (idCompra != null) {
+	        try {
+	            Compra compra = compraService.getOne(idCompra);
+	            listaResultado.add(compra);
+	        } catch (NoSuchElementException e) {
+	            model.addAttribute("error", "La compra con ID " + idCompra + " no existe.");
+	        }
+	        model.addAttribute("filtroActual", idCompra); 
+	    } else {
+	        listaResultado = compraService.getAll(); 
+	    }
+
+	    model.addAttribute("lstCompras", listaResultado);
+	    
+	    return "TiendaJuegos/CompraList"; 
+	}
+	
+	
 	
 	@GetMapping("nuevo")
 	public String nuevo(Model model) {
