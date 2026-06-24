@@ -1,67 +1,140 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
+
 <head>
 	<title>Listado de Juegos</title>
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta charset="UTF-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1">
+
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-</head>
-<body>
-	<div class="container mt-5">
-		<div class="card shadow-lg">
-			<div class="card-body">
 
-				<div class="row mb-3 align-items-center">
-					<div class="col-md-10">
-						<h1 class="card-title m-0">Listado de Juegos</h1>
-					</div>
-					<div class="col-md-2">
-						<a href="#" class="btn btn-success w-100">
-							<i class="fa-solid fa-plus"></i> Nuevo
-						</a>
-					</div>
+	<style>
+		body {
+			background: #f4f6f9;
+		}
+
+		.sidebar {
+			width: 250px;
+			height: 100vh;
+			position: fixed;
+			top: 0;
+			left: 0;
+			background: #212529;
+			padding: 20px;
+		}
+
+		.sidebar a {
+			display: block;
+			color: white;
+			padding: 10px;
+			margin-bottom: 8px;
+			text-decoration: none;
+			border-radius: 6px;
+		}
+
+		.sidebar a:hover {
+			background: #343a40;
+		}
+
+		.content {
+			margin-left: 270px;
+			padding: 25px;
+		}
+
+		.card {
+			border: none;
+			border-radius: 12px;
+		}
+	</style>
+</head>
+
+<body>
+
+<div class="sidebar">
+
+	<h4 class="text-white text-center mb-4">🎮 Sistema</h4>
+
+	<a th:href="@{/home}">
+		<i class="fa-solid fa-house"></i> Inicio
+	</a>
+
+	<a th:href="@{/juego/listado}">
+		<i class="fa-solid fa-gamepad"></i> Juegos
+	</a>
+
+	<a th:href="@{/compra/listado}">
+		<i class="fa-solid fa-box"></i> Compras
+	</a>
+
+	<a th:href="@{/categoria/listado}">
+		<i class="fa-solid fa-tags"></i> Categorías
+	</a>
+
+	<hr style="border-color: gray;">
+
+	<a th:href="@{/logout}" style="color: #ff6b6b;">
+		<i class="fa-solid fa-right-from-bracket"></i> Salir
+	</a>
+
+</div>
+
+<div class="content">
+
+	<div class="card shadow-sm">
+		<div class="card-body">
+
+			<div class="d-flex justify-content-between align-items-center mb-3">
+				<h2 class="m-0">Listado de Juegos</h2>
+
+				<a href="#" class="btn btn-success">
+					<i class="fa-solid fa-plus"></i> Nuevo
+				</a>
+			</div>
+
+			<form method="get" th:action="@{/juego/listado}" class="row mb-3">
+				<div class="col-md-4">
+					<select class="form-select" name="idCategoria">
+						<option value="">-- Todas las Categorías --</option>
+						<option th:each="item : ${tiposCategoria}"
+								th:value="${item.idCategoria}"
+								th:text="${item.nombreCategoria}">
+						</option>
+					</select>
 				</div>
 
-				<form method="get" th:action="@{/juego/listado}" class="row mb-4">
-					<div class="col-md-4">
-						<select class="form-select" name="idCategoria">
-							<option value="">-- Todas las Categorías --</option>
-							<option th:each="item : ${tiposCategoria}"
-									th:value="${item.idCategoria}"
-									th:text="${item.nombreCategoria}">
-							</option>
-						</select>
-					</div>
-					<div class="col-md-2">
-						<button type="submit" class="btn btn-primary w-100">
-							<i class="fa-solid fa-magnifying-glass"></i> Consultar
-						</button>
-					</div>
-				</form>
+				<div class="col-md-2">
+					<button class="btn btn-primary w-100">
+						<i class="fa-solid fa-magnifying-glass"></i> Buscar
+					</button>
+				</div>
+			</form>
 
-				<table class="table table-hover table-responsive align-middle">
-					<thead class="table-dark">
-						<tr>
-							<th class="text-center" style="width: 10%;">ID</th>
-							<th class="text-start">Título del Videojuego</th>
-							<th class="text-center" style="width: 15%;">Precio ($)</th>
-							<th class="text-center" style="width: 25%;">Categoría / Plataforma</th>
-						</tr>
-					</thead>
-					<tbody class="table-secondary">
-						<tr th:each="item : ${lstJuegos}">
-							<td th:text="${item.idJuego}" class="text-center"></td>
-							<td th:text="${item.titulo}" class="text-start"></td>
-							<td th:text="${'$' + item.precio}" class="text-center"></td>
-							<td th:text="${item.categoria.nombreCategoria}" class="text-center"></td>
-						</tr>
-					</tbody>
-				</table>
+			<table class="table table-hover align-middle">
+				<thead class="table-dark">
+					<tr>
+						<th class="text-center">ID</th>
+						<th>Título</th>
+						<th class="text-center">Precio</th>
+						<th class="text-center">Categoría</th>
+					</tr>
+				</thead>
 
-			</div>
+				<tbody class="table-light">
+					<tr th:each="item : ${lstJuegos}">
+						<td class="text-center" th:text="${item.idJuego}"></td>
+						<td th:text="${item.titulo}"></td>
+						<td class="text-center" th:text="${'$' + item.precio}"></td>
+						<td class="text-center" th:text="${item.categoria.nombreCategoria}"></td>
+					</tr>
+				</tbody>
+			</table>
+
 		</div>
 	</div>
+
+</div>
+
 </body>
 </html>

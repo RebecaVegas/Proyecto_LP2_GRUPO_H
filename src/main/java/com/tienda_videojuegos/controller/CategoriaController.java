@@ -22,4 +22,9 @@ public class CategoriaController {
 		
 		return "TiendaJuegos/CategoriaList"; 
 	}
+	
+	@GetMapping("nuevo")
+	public String nuevo() {
+	    return "TiendaJuegos/CategoriaNuevo";
+	}
 }

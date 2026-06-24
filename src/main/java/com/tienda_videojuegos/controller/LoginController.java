@@ -22,7 +22,7 @@ public class LoginController {
 
     @GetMapping({"/", "/login"})
     public String login() {
-        return "tiendajuegos/login";
+        return "TiendaJuegos/login";
     }
 
     @PostMapping("/validar")
@@ -42,7 +42,7 @@ public class LoginController {
                     "usuario",
                     user);
 
-            return "redirect:/categoria/listado";
+            return "redirect:/home";
         }
 
         return "redirect:/";
