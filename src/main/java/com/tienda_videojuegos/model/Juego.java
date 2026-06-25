@@ -22,7 +22,7 @@ public class Juego {
     private String titulo;
 
     @Column(name = "precio")
-    private BigDecimal precio;
+    private Double precio;
 
     @ManyToOne
     @JoinColumn(name = "id_categoria")

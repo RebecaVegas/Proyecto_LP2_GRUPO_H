@@ -1,5 +1,6 @@
 package com.tienda_videojuegos.service;
 
+import java.math.BigDecimal;
 import java.util.List;
 import org.springframework.stereotype.Service;
 
@@ -25,6 +26,10 @@ public class CompraService {
 
 	public ResultadoResponse create(Compra compra) {
 		try {
+			Double precioJuego = compra.getJuego().getPrecio();
+			compra.setTotal(compra.getCantidad() * precioJuego);
+
+			compraRepository.save(compra);
 			var registro = compraRepository.save(compra);
 			var mensaje = String.format("Compra N° %s registrada con éxito", registro.getIdCompra());
 			

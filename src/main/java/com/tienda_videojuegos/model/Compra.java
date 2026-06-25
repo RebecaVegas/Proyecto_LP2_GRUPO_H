@@ -26,7 +26,7 @@ public class Compra {
     private Integer cantidad;
 
     @Column(name = "total")
-    private BigDecimal total;
+    private Double total;
 
     @ManyToOne
     @JoinColumn(name = "id_juego")

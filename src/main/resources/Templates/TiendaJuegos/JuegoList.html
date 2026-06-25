@@ -74,7 +74,7 @@
 
 	<hr style="border-color: gray;">
 
-	<a th:href="@{/logout}" style="color: #ff6b6b;">
+	<a href="#" style="color: #ff6b6b;" id="cerrarSesionLink">
 		<i class="fa-solid fa-right-from-bracket"></i> Salir
 	</a>
 
@@ -88,7 +88,7 @@
 			<div class="d-flex justify-content-between align-items-center mb-3">
 				<h2 class="m-0">Listado de Juegos</h2>
 
-				<a href="#" class="btn btn-success">
+				<a th:href="@{/juego/nuevoJuego}" class="btn btn-success">
 					<i class="fa-solid fa-plus"></i> Nuevo
 				</a>
 			</div>
@@ -96,16 +96,16 @@
 			<form method="get" th:action="@{/juego/listado}" class="row mb-3">
 				<div class="col-md-4">
 					<select class="form-select" name="idCategoria">
-						<option value="">-- Todas las Categorías --</option>
 						<option th:each="item : ${tiposCategoria}"
-								th:value="${item.idCategoria}"
-								th:text="${item.nombreCategoria}">
+						        th:value="${item.idCategoria}"
+						        th:text="${item.nombreCategoria}"
+						        th:selected="${item.idCategoria == idCategoriaSeleccionada}">
 						</option>
 					</select>
 				</div>
 
 				<div class="col-md-2">
-					<button class="btn btn-primary w-100">
+					<button type="submit" class="btn btn-primary w-100">
 						<i class="fa-solid fa-magnifying-glass"></i> Buscar
 					</button>
 				</div>
@@ -118,6 +118,7 @@
 						<th>Título</th>
 						<th class="text-center">Precio</th>
 						<th class="text-center">Categoría</th>
+						<th class="text-center">Acciones</th>
 					</tr>
 				</thead>
 
@@ -127,6 +128,12 @@
 						<td th:text="${item.titulo}"></td>
 						<td class="text-center" th:text="${'$' + item.precio}"></td>
 						<td class="text-center" th:text="${item.categoria.nombreCategoria}"></td>
+						<td class="text-center">
+							<a th:href="@{/juego/edicion/{id}(id=${item.idJuego})}"
+							class="btn btn-outline-primary btn-sm">
+								<i class="fa-regular fa-pen-to-square"></i> Editar
+							</a>
+						</td>
 					</tr>
 				</tbody>
 			</table>
@@ -136,5 +143,27 @@
 
 </div>
 
+	<script>
+		document.getElementById("cerrarSesionLink").addEventListener("click", function (event) {
+			event.preventDefault(); // Evita la acción por defecto del enlace
+			
+			Swal.fire({
+				title: "¿Deseas cerrar sesión?",
+				icon: "warning",
+				showCancelButton: true,
+				confirmButtonColor: "#3085d6",
+				cancelButtonColor: "#d33",
+				confirmButtonText: "Sí, cerrar",
+				cancelButtonText: "No"
+			}).then((result) => {
+				if (result.isConfirmed) {
+					window.location.href = "/login/cerrar-sesion";
+				}
+			});
+		});
+	</script>
+
+	<th:block th:utext="${alert}"></th:block>
+	<th:block th:utext="${toast}"></th:block>
 </body>
 </html>

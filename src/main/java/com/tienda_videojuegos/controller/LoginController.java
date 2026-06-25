@@ -53,4 +53,10 @@ public class LoginController {
 
         return "inicio";
     }
+    
+    @GetMapping("/login/cerrar-sesion")
+	public String cerrarSesion(HttpSession session) {
+		session.invalidate();
+		return "redirect:/";
+	}
 }

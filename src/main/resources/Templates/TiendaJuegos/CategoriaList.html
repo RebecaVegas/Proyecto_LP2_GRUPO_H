@@ -74,7 +74,7 @@
 
 	<hr style="border-color: gray;">
 
-	<a th:href="@{/logout}" style="color:#ff6b6b;">
+	<a href="#" style="color:#ff6b6b;"id="cerrarSesionLink">
 		<i class="fa-solid fa-right-from-bracket"></i> Salir
 	</a>
 
@@ -88,9 +88,9 @@
 			<div class="d-flex justify-content-between align-items-center mb-3">
 				<h2 class="m-0">Listado de Categorías</h2>
 
-				<a th:href="@{/categoria/nuevo}" class="btn btn-success">
-					<i class="fa-solid fa-plus"></i> Nuevo
-				</a>
+<!--				<a th:href="@{/categoria/nuevo}" class="btn btn-success">-->
+<!--					<i class="fa-solid fa-plus"></i> Nuevo-->
+<!--				</a>-->
 			</div>
 
 			<table class="table table-hover align-middle">
@@ -113,6 +113,27 @@
 	</div>
 
 </div>
+<script>
+		document.getElementById("cerrarSesionLink").addEventListener("click", function (event) {
+			event.preventDefault(); // Evita la acción por defecto del enlace
+			
+			Swal.fire({
+				title: "¿Deseas cerrar sesión?",
+				icon: "warning",
+				showCancelButton: true,
+				confirmButtonColor: "#3085d6",
+				cancelButtonColor: "#d33",
+				confirmButtonText: "Sí, cerrar",
+				cancelButtonText: "No"
+			}).then((result) => {
+				if (result.isConfirmed) {
+					window.location.href = "/login/cerrar-sesion";
+				}
+			});
+		});
+	</script>
 
+	<th:block th:utext="${alert}"></th:block>
+	<th:block th:utext="${toast}"></th:block>
 </body>
 </html>
