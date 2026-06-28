@@ -38,20 +38,12 @@ public class LoginController {
 
         if(user != null) {
 
-            session.setAttribute(
-                    "usuario",
-                    user);
+            session.setAttribute("usuario", user);
 
-            return "redirect:/home";
+            return "redirect:/home?login=ok";
         }
 
-        return "redirect:/";
-    }
-
-    @GetMapping("/inicio")
-    public String inicio() {
-
-        return "inicio";
+        return "redirect:/login?error=true";
     }
     
     @GetMapping("/login/cerrar-sesion")

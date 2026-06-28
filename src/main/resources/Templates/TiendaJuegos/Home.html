@@ -20,7 +20,6 @@
 
     <div class="row justify-content-center">
 
-        <!-- 🎮 Juegos -->
         <div class="col-md-3">
             <a th:href="@{/juego/listado}" class="text-decoration-none">
                 <div class="card shadow text-center p-4 h-100">
@@ -30,7 +29,6 @@
             </a>
         </div>
 
-        <!-- 🧾 Compras -->
 		<div class="col-md-3">
 		    <a th:href="@{/compra/listado}" class="text-decoration-none">
 		        <div class="card shadow text-center p-4 h-100">
@@ -40,7 +38,6 @@
 		    </a>
 		</div>
 
-        <!-- 🏷️ Categorías -->
         <div class="col-md-3">
             <a th:href="@{/categoria/listado}" class="text-decoration-none">
                 <div class="card shadow text-center p-4 h-100">
@@ -53,6 +50,14 @@
     </div>
 
 </div>
-
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script th:if="${param.login}">
+    Swal.fire({
+        icon: 'success',
+        title: '¡Bienvenido!',
+        text: 'Inicio de sesión exitoso.',
+        confirmButtonText: 'Continuar'
+    });
+</script>
 </body>
 </html>
